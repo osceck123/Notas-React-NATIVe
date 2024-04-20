@@ -48,7 +48,7 @@ export default function App({SetTokenId}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Notas</Text>
+      <Text style={styles.title}>Recetas</Text>
       <TextInput
         style={styles.input}
         placeholder="Título"
@@ -62,12 +62,16 @@ export default function App({SetTokenId}) {
         value={content}
         multiline
       />
-      <Button title="Agregar Nota" onPress={handleAddNote} />
-      <FlatList
-        data={notes}
-        renderItem={({ item }) => <NoteItem title={item.title} content={item.content} />}
-        keyExtractor={item => item._id}
-      />
+      <Button title="Agregar Receta" onPress={handleAddNote} />
+      <View style={styles.containerTarjetas}>
+          <Text style={styles.title}>Mis Recetas</Text>
+          <FlatList
+            data={notes}
+            renderItem={({ item }) => <NoteItem title={item.title} content={item.content}/>}
+            keyExtractor={item => item._id}
+          />
+      </View>
+      
     </View>
   );
 }
@@ -84,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign:'center'
   },
   input: {
     borderWidth: 1,
@@ -93,4 +98,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
   },
+  containerTarjetas: {
+    flex:1,
+    width:'100%',
+    backgroundColor: '#acc5e8',
+    maxHeight: '100%',
+    padding:20,
+    marginTop:10
+   
+  }
 });

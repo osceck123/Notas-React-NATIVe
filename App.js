@@ -6,10 +6,13 @@ import HomeScreen from './screens/HomeScreen';
 import LoginForm from './screens/LoginForm';
 import SignupForm from './screens/SingupForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LandingScreen from './screens/Landing';
-
+import Recetas from './screens/Recetas';
+import Logout from './screens/Logout';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator()
 
 function App() {
 
@@ -32,20 +35,54 @@ function App() {
 
   return (
     <NavigationContainer>
+    {tokenId ? (
+      <Drawer.Navigator >
+        <Drawer.Screen name="Home" component={() => <HomeScreen SetTokenId={SetTokenId} />} options={{ title: 'Recetas',
+       drawerIcon: ({ focused, size }) => (
+        <Ionicons
+          name={focused ? 'newspaper-outline' : 'newspaper-outline'}
+          size={size}
+          color={'#000'} // Color del icono
+        />
+      ), }} />
+        <Drawer.Screen name="Mis Recetas" component={Recetas} options={{
+           drawerIcon: ({ focused, size }) => (
+            <Ionicons
+              name={focused ? 'folder-open-outline' : 'folder-outline'}
+              size={size}
+              color={'#000'} // Color del icono
+            />
+          ),
+        }}/>
+        <Drawer.Screen name="Logout" component={Logout}  options={{
+          title: 'Logout',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          drawerIcon: ({ focused, size }) => (
+            <Ionicons
+              name={focused ? 'exit-outline' : 'exit'}
+              size={size}
+              color={'#000'} // Color del icono
+            />
+          ),
+        }} />
+      </Drawer.Navigator>
+    ) : (
       <Stack.Navigator>
-      {tokenId ? (
-        <Stack.Group>
-          <Stack.Screen name="Home" component={()=> <HomeScreen SetTokenId={SetTokenId}/>} options={{ title: 'Notas' }} />
-        </Stack.Group>
-
-      ):(
         <Stack.Group >
-          <Stack.Screen name="Signup" component={()=><SignupForm SetTokenId={SetTokenId}/>} options={{ title: 'Registrarse',  }} />
-          <Stack.Screen name="Login" component={()=><LoginForm SetTokenId={SetTokenId}/>} options={{ title: 'Iniciar Sesión' }} />
+          <Stack.Screen name="Signup" component={() => <SignupForm SetTokenId={SetTokenId} />} options={{ title: 'Registrarse', }} />
+          <Stack.Screen name="Login" component={() => <LoginForm SetTokenId={SetTokenId} />} options={{ title: 'Iniciar Sesión' }} />
         </Stack.Group>
-      )}
       </Stack.Navigator>
-    </NavigationContainer>
+    )}
+
+  
+  </NavigationContainer>
   );
 }
 

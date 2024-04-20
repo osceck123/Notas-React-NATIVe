@@ -12,15 +12,19 @@ const NoteItem = ({ title, content }) => {
 
 const styles = StyleSheet.create({
   note: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 10,
-    marginBottom: 10,
+    flex:10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    padding:10,
+    marginBottom: 15,
+    width:'100%',
+
   },
   noteTitle: {
     fontWeight: 'bold',
     marginBottom: 5,
+    textAlign: 'center',
+    fontSize: '1.1rem'
   },
 });
 

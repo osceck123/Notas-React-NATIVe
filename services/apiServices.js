@@ -1,4 +1,5 @@
 const BASE_URL = 'http://localhost:3000/api';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const fetchNotes = async () => {
   try {
@@ -28,6 +29,25 @@ export const addNote = async (title, content, token, userId) => {
     throw error;
   }
 };
+
+export const fetchMisNotas = async () => {
+   // Verifica si el usuario está autenticado
+   const id = await AsyncStorage.getItem('id');
+  try {
+    const response = await fetch(`http://localhost:3000/api/buscarNota`, {
+      method: 'POST', 
+      headers:  {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({id})});
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching notes:', error);
+    throw error;
+  }
+};
+
 
 
 //agregar el singup
@@ -70,3 +90,5 @@ export const login = async (username, password) => {
       throw error;
     }
   };
+
+  
